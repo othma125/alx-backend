@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Simple pagination"""
-from csv import reader
+import csv
 from typing import List, Tuple
 
 
@@ -26,7 +26,8 @@ class Server:
         """
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
-                dataset = [row for row in reader(f)]
+                reader = csv.reader(f)
+                dataset = [row for row in reader]
                 self.__dataset = dataset[1:]
         return self.__dataset
 
@@ -35,4 +36,6 @@ class Server:
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
         start, end = index_range(page, page_size)
+        if start > len(__dataset()):
+            return []
         return self.__dataset()[start:end]
