@@ -8,7 +8,9 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """Return a tuple of size two containing a start index and an end index
     corresponding to the range of indexes to return in a list for those
     particular pagination parameters."""
-    return (page - 1) * page_size, page * page_size
+    start = (page - 1) * page_size
+    end = page * page_size
+    return (start, end)
 
 
 class Server:
@@ -26,7 +28,6 @@ class Server:
             with open(self.DATA_FILE) as f:
                 dataset = [row for row in reader(f)]
             self.__dataset = dataset[1:]
-
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
